@@ -1,0 +1,25 @@
+local city_data = {
+    { name = "Madrid",    pctX = 0.45, pctY = 0.45,  population = 3480000, owner = "none",       controller = "none",       ownerColor = {0.22, 0.22, 0.22} }, 
+    { name = "Lisbon",    pctX = 0.11, pctY = 0.60,  population = 575740,  owner = "olisbon",    controller = "olisbon",    ownerColor = {0.0, 0.35, 0.33} }, 
+    { name = "Barcelona", pctX = 0.93, pctY = 0.25,  population = 1690000, owner = "none",       controller = "none",       ownerColor = {0.22, 0.22, 0.22} },
+    { name = "Bilbao",    pctX = 0.55, pctY = 0.10,  population = 347340,  owner = "glopistan",  controller = "glopistan",  ownerColor = {0.1, 0.65, 0.25} }, 
+    { name = "Sevilla",   pctX = 0.31, pctY = 0.77,  population = 686400,  owner = "algarvorum", controller = "algarvorum", ownerColor = {0.0, 0.55, 1.0} }, 
+    { name = "Porto",     pctX = 0.16, pctY = 0.25,  population = 231500,  owner = "glopistan",  controller = "none",       ownerColor = {0.1, 0.65, 0.25} },
+    { name = "Valencia",  pctX = 0.7,  pctY = 0.53,  population = 800000,  owner = "macklostan", controller = "macklostan", ownerColor = {0.95, 0.85, 0.2} }, 
+    { name = "Gibraltar", pctX = 0.35, pctY = 0.9,   population = 34000,   owner = "algarvorum", controller = "algarvorum", ownerColor = {0.0, 0.55, 1.0} },
+    { name = "Ibiza",     pctX = 0.83, pctY = 0.59,  population = 159180,  owner = "macklostan", controller = "macklostan", ownerColor = {0.95, 0.85, 0.2} },
+    { name = "Zaragoza",  pctX = 0.65, pctY = 0.25,  population = 693090,  owner = "none",       controller = "none",       ownerColor = {0.22, 0.22, 0.22} },
+    { name = "Andorra",   pctX = 0.84, pctY = 0.17,  population = 24040,   owner = "none",       controller = "none",       ownerColor = {0.22, 0.22, 0.22} },
+    { name = "Coruna",    pctX = 0.19, pctY = 0.08,  population = 251540,  owner = "glopistan",  controller = "glopistan",  ownerColor = {0.1, 0.65, 0.25} },
+    { name = "Cartagena", pctX = 0.68, pctY = 0.745, population = 218210,  owner = "macklostan", controller = "macklostan", ownerColor = {0.95, 0.85, 0.2} },
+    { name = "Badajoz",   pctX = 0.25, pctY = 0.58,  population = 150210,  owner = "olisbon",    controller = "olisbon",    ownerColor = {0.0, 0.35, 0.33} },
+    { name = "Salamanca", pctX = 0.32, pctY = 0.26,  population = 146110,  owner = "montagrand", controller = "montagrand", ownerColor = {0.55, 0.2, 0.6} }, 
+    { name = "Granada",   pctX = 0.55, pctY = 0.80,  population = 114920,  owner = "macklostan", controller = "macklostan", ownerColor = {0.95, 0.85, 0.20} },
+    { name = "Lagos",     pctX = 0.16, pctY = 0.77,  population = 33490,   owner = "algarvorum", controller = "algarvorum", ownerColor = {0.0, 0.55, 1.00} },
+    { name = "Tanger",    pctX = 0.33, pctY = 0.97,  population = 1280000, owner = "adherbal",   controller = "adherbal",   ownerColor = {0.75, 0.3, 0.15} },
+    { name = "Algiers",   pctX = 0.95, pctY = 0.87,  population = 4330000, owner = "adherbal",   controller = "adherbal",   ownerColor = {0.75, 0.3, 0.15} },
+    { name = "Coimbra",   pctX = 0.16, pctY = 0.45,  population = 140800,  owner = "olisbon",    controller = "olisbon",    ownerColor = {0.0, 0.35, 0.33} },
+    { name = "Leon",      pctX = 0.32, pctY = 0.14,  population = 1580000, owner = "glopistan",  controller = "glopistan",  ownerColor = {0.1, 0.65, 0.25} },
+    { name = "City",      pctX = 0.80, pctY = 0.90,  population = 1000000, owner = "adherbal",   controller = "adherbal",   ownerColor = {0.75, 0.3, 0.15}}
+}
+return city_data
