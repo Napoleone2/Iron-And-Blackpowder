@@ -1,5 +1,5 @@
 require("button")
-local country_buttons = require("the_generator_script_for_the_buttons_you_click_to_select_which_country_you_want_to_play_as")
+local country_buttons = require("country_buttons")
 
 local country_select = {}
 
@@ -8,6 +8,7 @@ local wh = love.graphics.getHeight()
 
 local bigfont = love.graphics.newFont("Data/Reblade-Regular.otf", 40)
 local medfont = love.graphics.newFont("Data/Reblade-Regular.otf", 24)
+local smallfont = love.graphics.newFont("Data/Reblade-Regular.otf", 14)
 
 local topbar
 local cs_body
@@ -65,6 +66,15 @@ function country_select.load()
     backbutton.color = {135/255, 108/255, 61/255}
     backbutton.text = "Back"
 
+    savepanel = {}
+    savepanel.x = buttonbox.x
+    savepanel.y = topbar.y + topbar.height
+    savepanel.width = ww / 6
+    savepanel.height = wh - topbar.height - buttonbox.height
+    savepanel.color = {255/255, 228/255, 181/255} 
+
+    saveslots = {svs1, svs2, svs3, svs4}
+
     country_buttons.load()
     playerCountry = country_buttons.getSelectedCountry()
 end
@@ -85,7 +95,7 @@ function country_select.update(dt)
     if starthovered and love.mouse.isDown(1) then
         if playerCountry then
             selectedCountry = playerCountry
-            gamestate = "game"
+            gamestate = "maingameloading"
         end
     end
 end
@@ -103,8 +113,8 @@ function country_select.draw()
     love.graphics.setColor(buttonbox.color[1], buttonbox.color[2], buttonbox.color[3])
     love.graphics.rectangle("fill", buttonbox.x, buttonbox.y, buttonbox.width, buttonbox.height)
 
-    love.graphics.setColor(topbar.color[1], topbar.color[2], topbar.color[3])
-    love.graphics.rectangle("fill", buttonbox.x, topbar.y + topbar.height, ww / 6, wh - buttonbox.height - topbar.height)
+    love.graphics.setColor(savepanel.color[1], savepanel.color[2], savepanel.color[3])
+    love.graphics.rectangle("fill", savepanel.x, savepanel.y, savepanel.width, savepanel.height)
 
     love.graphics.setFont(bigfont)
 
@@ -124,8 +134,8 @@ function country_select.draw()
         details = string.format("%s\n\n%s", selected.name, selected.lore)
     end
 
-    love.graphics.setFont(medfont)
-    love.graphics.printf(details, lorebox.x + 20, lorebox.y + lorebox.height / 20, lorebox.width - 40, "left")
+    love.graphics.setFont(smallfont)
+    love.graphics.printf(details, lorebox.x + 20, lorebox.y + lorebox.height / 20, lorebox.width - ww / 50, "left")
 end
 
 return country_select

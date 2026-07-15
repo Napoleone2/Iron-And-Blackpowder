@@ -52,7 +52,7 @@ end
 function map.draw()
     
     love.graphics.setColor(205 / 255, 133 / 255, 63 / 255, 1)
-    love.graphics.rectangle("fill", -100000, -100000, 10000000, 10000000)
+    love.graphics.rectangle("fill", 0, 0, 10000000, 10000000)
     
     love.graphics.setColor(102 / 255, 76 / 255 , 40 / 255)
     love.graphics.rectangle("fill", 

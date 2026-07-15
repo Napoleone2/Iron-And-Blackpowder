@@ -44,7 +44,7 @@ function Provinces.generate(mapWidth, mapHeight, citiesList)
                     local color = closestCity.ownerColor
                     provinceData:setPixel(x, y, color[1], color[2], color[3], 1)
                 else
-                    provinceData:setPixel(x, y, 1, 1, 1, 1)
+                    provinceData:setPixel(x, y, 0.7, 0.7, 0.7, 1)
                 end
             else
                 provinceData:setPixel(x, y, 0, 0, 0, 0)
