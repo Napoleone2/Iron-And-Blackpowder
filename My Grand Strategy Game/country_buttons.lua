@@ -17,7 +17,7 @@ local itemFont = love.graphics.newFont("Data/Reblade-Regular.otf", 18)
 local itemHeight = 90
 local itemSpacing = 12
 local itemMargin = 20
-local columns = 3
+local columns = 2
 
 local items = {}
 local selectedIndex = 1

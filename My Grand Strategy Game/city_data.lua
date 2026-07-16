@@ -1,5 +1,5 @@
 local city_data = {
-    { name = "Madrid",    pctX = 0.45, pctY = 0.45,  population = 3480000, owner = "macklostan", controller = "macklostan", ownerColor = {0.95, 0.85, 0.2}}, 
+    { name = "Madrid",    pctX = 0.45, pctY = 0.45,  population = 3480000, owner = "none",       controller = "none",       ownerColor = {0.22, 0.22, 0.22} }, 
     { name = "Lisbon",    pctX = 0.11, pctY = 0.60,  population = 575740,  owner = "olisbon",    controller = "olisbon",    ownerColor = {0.0, 0.35, 0.33} }, 
     { name = "Barcelona", pctX = 0.93, pctY = 0.25,  population = 1690000, owner = "none",       controller = "none",       ownerColor = {0.95, 0.85, 0.2} },
     { name = "Bilbao",    pctX = 0.55, pctY = 0.10,  population = 347340,  owner = "glopistan",  controller = "glopistan",  ownerColor = {0.1, 0.65, 0.25} }, 

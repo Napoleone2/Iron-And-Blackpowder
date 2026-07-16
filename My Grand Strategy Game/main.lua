@@ -4,20 +4,23 @@ require("cities")
 require("gui")
 require("mui")
 require("loadingscreen")
+require("time")
 local Provinces = require("provinces")
 local country_select = require("country_select")
 
 function love.load()
-    gamestate = "initialloading" 
+    gamestate = "menu" 
+    loadtime()
     
-    gui.load()
     mui.load()
     country_select.load()
+    gui.load()
     map.load()
     load()
 end
 
 function love.update(dt)
+    timemgr()
     if gamestate == "initialloading" then
         loadupdate(2)
     end

@@ -73,7 +73,6 @@ function country_select.load()
     savepanel.height = wh - topbar.height - buttonbox.height
     savepanel.color = {255/255, 228/255, 181/255} 
 
-    saveslots = {svs1, svs2, svs3, svs4}
 
     country_buttons.load()
     playerCountry = country_buttons.getSelectedCountry()
@@ -139,5 +138,3 @@ function country_select.draw()
 end
 
 return country_select
-
-

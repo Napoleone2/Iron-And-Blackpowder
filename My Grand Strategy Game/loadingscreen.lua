@@ -12,7 +12,7 @@ end
 
 function loadupdate(speed)
     print("loading:" .. loadingbar.width / ww * 100 .. "%")
-    loadingbar.width = loadingbar.width + speed * 1
+    loadingbar.width = loadingbar.width + speed * 1000
     if loadingbar.width > ww and gamestate == "initialloading" then
         print("loading complete!")
         gamestate = "menu"
@@ -40,5 +40,5 @@ function drawload()
 
     love.graphics.setFont(bigfont)
     love.graphics.printf("Loading Game. Please Wait", 0,  wh /2, ww, "center")
-    love.graphics.printf("loading:" .. loadingbar.width / ww * 100 .. "%", ww / 2, 0, ww, "center")
+    love.graphics.printf("loading:" .. loadingbar.width / ww * 100 .. "%", 0, 0, ww, "center")
 end
