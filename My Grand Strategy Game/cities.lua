@@ -28,14 +28,14 @@ function cities.draw()
             local renderY = map.y + (city.y * zoom)
             
             love.graphics.setColor(0, 0, 0, 1)
-            love.graphics.circle("fill", renderX, renderY, 7)
+            love.graphics.circle("fill", renderX, renderY, 14)
             
             if city.ownerColor then
                 love.graphics.setColor(city.ownerColor[1], city.ownerColor[2], city.ownerColor[3], 1)
             else
                 love.graphics.setColor(1, 1, 1, 1)
             end
-            love.graphics.circle("fill", renderX, renderY, 5)
+            love.graphics.circle("fill", renderX, renderY, 10)
         end
     end
     love.graphics.setColor(1, 1, 1, 1) -- Always reset canvas coloring

@@ -30,5 +30,5 @@ function gui.draw()
     love.graphics.rectangle("fill", topbar.x, topbar.y, topbar.width, topbar.height)
     love.graphics.setColor(0, 0, 0, 1)
     love.graphics.setFont(gui.smallFont)
-    --love.graphics.printf("Day:" .. days .. " | " .. paused .. " | Speed: " .. time_speed, 0, 0, topbar.width, "right")
+    love.graphics.printf(day_of_month .. "th of " .. months[month_of_year] .. " " .. year .. " | " .. paused, 0, 0, topbar.width, "right")
 end
