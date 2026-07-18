@@ -2,9 +2,12 @@ require("time")
 require("country_select")
 require("country_buttons")
 local countries = require("Countries")
+require("button")
 
 ww = love.graphics.getWidth()
 wh = love.graphics.getHeight()
+
+mousex, mousey = love.mouse.getPosition()
 
 gui = {}
 
@@ -25,6 +28,12 @@ function gui.load()
     gui.flagScale = 1
 
     gui.smallFont = love.graphics.newFont("Data/Reblade-Regular.otf", 35)
+
+    gui.flag_button = {}
+    gui.flag_button.x = gui.flag.x
+    gui.flag_button.y = gui.flag.y
+    gui.flag_button.color = {0.22, 0.22, 0.22, 0}
+    gui.flag_button.isHovered = false
 end
 
 function gui.update()
@@ -41,6 +50,31 @@ function gui.update()
         gui.flag.path = nil
         gui.flag.image = nil
     end
+
+    function drawCountryFlag()
+        -- Draw the selected country's flag in the top-left corner.
+        if gui.flag.image and selectedCountry then
+            targetHeight = 96
+            scaleX = targetHeight / math.max(1, gui.flag.image:getHeight())
+            scaleY = targetHeight / math.max(1, gui.flag.image:getHeight())
+            drawWidth = gui.flag.image:getWidth() * scaleX
+            drawHeight = gui.flag.image:getHeight() * scaleY
+
+            love.graphics.setColor(255/255, 228/255, 181/255)
+            love.graphics.setLineWidth(ww / 80)
+            love.graphics.rectangle("line", gui.flag.x, gui.flag.y, drawWidth, drawHeight)
+            love.graphics.setColor(1, 1, 1, 1)
+            love.graphics.draw(gui.flag.image, gui.flag.x, gui.flag.y, 0, scaleX, scaleY)
+            newButton(gui.flag_button.x, gui.flag_button.y, drawWidth, drawHeight, gui.flag_button.color, gui.flag_button.isHovered, "")
+        end
+
+    end
+    drawCountryFlag()
+    if mousex > gui.flag_button.x and mousey > gui.flag_button.y and mousex < gui.flag_button.x + drawWidth and mousey < gui.flag_button.y + drawHeight then
+        gui.flag_button.isHovered = true
+    else
+        gui.flag_button.isHovered = false
+    end
 end
 
 function gui.draw()
@@ -48,20 +82,7 @@ function gui.draw()
     love.graphics.setColor(255/255, 228/255, 181/255)
     love.graphics.rectangle("fill", topbar.x, topbar.y, topbar.width, topbar.height)
 
-    -- Draw the selected country's flag in the top-left corner.
-    if gui.flag.image and selectedCountry then
-        local targetHeight = 96
-        local scaleX = targetHeight / math.max(1, gui.flag.image:getHeight())
-        local scaleY = targetHeight / math.max(1, gui.flag.image:getHeight())
-        local drawWidth = gui.flag.image:getWidth() * scaleX
-        local drawHeight = gui.flag.image:getHeight() * scaleY
-
-        love.graphics.setColor(255/255, 228/255, 181/255)
-        love.graphics.setLineWidth(ww / 80)
-        love.graphics.rectangle("line", gui.flag.x, gui.flag.y, drawWidth, drawHeight)
-        love.graphics.setColor(1, 1, 1, 1)
-        love.graphics.draw(gui.flag.image, gui.flag.x, gui.flag.y, 0, scaleX, scaleY)
-    end
+    drawCountryFlag()
 
     love.graphics.setColor(0, 0, 0, 1)
     love.graphics.setFont(gui.smallFont)
