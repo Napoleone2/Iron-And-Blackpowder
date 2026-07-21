@@ -3,6 +3,9 @@ require("country_select")
 require("country_buttons")
 local countries = require("Countries")
 require("button")
+require("political_tab")
+require("hovered")
+
 
 ww = love.graphics.getWidth()
 wh = love.graphics.getHeight()
@@ -13,6 +16,8 @@ gui = {}
 
 -- Initialize the top bar and UI flag state.
 function gui.load()
+    currenttab = "none"
+
     topbar = {}
     topbar.x = 0
     topbar.y = 0
@@ -34,7 +39,10 @@ function gui.load()
     gui.flag_button.y = gui.flag.y
     gui.flag_button.color = {0.22, 0.22, 0.22, 0}
     gui.flag_button.isHovered = false
+    gui.flag_button.text = "blank"
 end
+
+
 
 function gui.update()
     -- Reload the flag image whenever the selected country changes.
@@ -65,22 +73,33 @@ function gui.update()
             love.graphics.rectangle("line", gui.flag.x, gui.flag.y, drawWidth, drawHeight)
             love.graphics.setColor(1, 1, 1, 1)
             love.graphics.draw(gui.flag.image, gui.flag.x, gui.flag.y, 0, scaleX, scaleY)
-            newButton(gui.flag_button.x, gui.flag_button.y, drawWidth, drawHeight, gui.flag_button.color, gui.flag_button.isHovered, "")
+            newButton(gui.flag_button.x, gui.flag_button.y, drawWidth, drawHeight, gui.flag_button.color, gui.flag_button.isHovered, gui.flag_button.text)
         end
 
     end
     drawCountryFlag()
-    if mousex > gui.flag_button.x and mousey > gui.flag_button.y and mousex < gui.flag_button.x + drawWidth and mousey < gui.flag_button.y + drawHeight then
-        gui.flag_button.isHovered = true
-    else
-        gui.flag_button.isHovered = false
+
+    gui.flag_button.isHovered = ishovered(gui.flag_button.x, gui.flag_button.y, drawWidth, drawHeight, mousex, mousey)
+
+    if isHovered then
+        gui.flag_buttton.text = "hovered!"
+    end
+
+    if gui.flag_button.isHovered and love.mouse.isDown then
+        currenttab = "political"
+        gui.flag_button.text = "political"
     end
 end
 
+
 function gui.draw()
-    -- Draw the top bar background.
+
     love.graphics.setColor(255/255, 228/255, 181/255)
     love.graphics.rectangle("fill", topbar.x, topbar.y, topbar.width, topbar.height)
+
+    if currenttab == "political" then
+        drawPoliticalTab()
+    end
 
     drawCountryFlag()
 

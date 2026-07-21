@@ -4,6 +4,7 @@ function newButton(x, y, width, height, color, isHovered, text)
         displayColor[1] = displayColor[1] * 0.7
         displayColor[2] = displayColor[2] * 0.7
         displayColor[3] = displayColor[3] * 0.7
+        
         if color[4] ~= 1 then
             displayColor[4] = displayColor[4] + 0.2
         end

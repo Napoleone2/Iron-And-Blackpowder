@@ -20,6 +20,7 @@ local city_data = {
     { name = "Algiers",   pctX = 0.95, pctY = 0.87,  population = 4330000, owner = "adherbal",   controller = "adherbal",   ownerColor = {0.75, 0.3, 0.15} },
     { name = "Coimbra",   pctX = 0.16, pctY = 0.45,  population = 140800,  owner = "olisbon",    controller = "olisbon",    ownerColor = {0.0, 0.35, 0.33} },
     { name = "Leon",      pctX = 0.32, pctY = 0.14,  population = 1580000, owner = "glopistan",  controller = "glopistan",  ownerColor = {0.1, 0.65, 0.25} },
-    { name = "City",      pctX = 0.80, pctY = 0.90,  population = 1000000, owner = "adherbal",   controller = "adherbal",   ownerColor = {0.75, 0.3, 0.15}}
+    { name = "City",      pctX = 0.80, pctY = 0.90,  population = 1000000, owner = "adherbal",   controller = "adherbal",   ownerColor = {0.75, 0.3, 0.15} },
+    { name = "City 2",    pctX = 0.65, pctY = 0.05,  population = 750000,  owner = "none",       controller = "none",       ownerColor = {0.22, 0.22, 0.22} }
 }
 return city_data

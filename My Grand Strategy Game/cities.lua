@@ -2,6 +2,8 @@ cities = {}
 
 cities.list = require("city_data") 
 
+font = love.graphics.newFont("Data/Reblade-Regular.otf", 18)
+
 function cities.load()
     
     local mapImg = love.graphics.newImage("Data/Images/spain_map.png")
@@ -20,13 +22,16 @@ function cities.update(dt)
 end
 
 function cities.draw() 
+    love.graphics.setFont(font)
     
     for _, city in ipairs(cities.list) do
         if city.x and city.y then
             
             local renderX = map.x + (city.x * zoom)
             local renderY = map.y + (city.y * zoom)
-            
+            love.graphics.setColor(1, 1, 1, 1)
+            love.graphics.printf(city.name, renderX + 25, renderY, 1000, "left")
+
             love.graphics.setColor(0, 0, 0, 1)
             love.graphics.circle("fill", renderX, renderY, 14)
             

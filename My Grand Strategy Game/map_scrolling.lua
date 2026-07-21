@@ -4,7 +4,7 @@ map = {}
 
 function map.load()
     zoom = 2
-    scroll_speed = 5
+    scroll_speed = 10
 
     map.image = love.graphics.newImage("Data/Images/spain_map.png")
     map.terrain = love.graphics.newImage("Data/Images/Terrain.jpg")
