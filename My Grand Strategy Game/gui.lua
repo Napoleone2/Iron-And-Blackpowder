@@ -2,7 +2,7 @@ require("time")
 require("country_select")
 require("country_buttons")
 local countries = require("Countries")
-require("button")
+require("ui_tools")
 require("political_tab")
 require("hovered")
 
