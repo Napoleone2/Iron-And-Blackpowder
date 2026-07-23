@@ -34,12 +34,34 @@ function gui.load()
 
     gui.smallFont = love.graphics.newFont("Data/Reblade-Regular.otf", 35)
 
-    gui.flag_button = {}
-    gui.flag_button.x = gui.flag.x
-    gui.flag_button.y = gui.flag.y
-    gui.flag_button.color = {0.22, 0.22, 0.22, 0}
-    gui.flag_button.isHovered = false
-    gui.flag_button.text = "blank"
+    gui.button_political = {}
+    gui.button_political.x = ww / 8
+    gui.button_political.y = topbar.height
+    gui.button_political.width = 200
+    gui.button_political.height = 25
+    gui.button_political.color = {0.2, 0.2, 0.8, 1}
+    gui.button_political.text = "Political"
+    gui.button_political.isHovered = false
+
+    gui.button_economy = {}
+    gui.button_economy.x = gui.button_political.x + gui.button_political.width
+    gui.button_economy.y = topbar.height
+    gui.button_economy.width = 200
+    gui.button_economy.height = 25
+    gui.button_economy.color = {0.2, 0.8, 0.2, 1}
+    gui.button_economy.text = "Economy"
+    gui.button_economy.isHovered = false
+
+    gui.button_research = {}
+    gui.button_research.x = gui.button_economy.x + gui.button_economy.width
+    gui.button_research.y = topbar.height
+    gui.button_research.width = 200
+    gui.button_research.height = 25
+    gui.button_research.color = {0.8, 0.2, 0.2, 1}
+    gui.button_research.text = "Research"
+    gui.button_research.isHovered = false
+
+
 end
 
 
@@ -73,22 +95,11 @@ function gui.update()
             love.graphics.rectangle("line", gui.flag.x, gui.flag.y, drawWidth, drawHeight)
             love.graphics.setColor(1, 1, 1, 1)
             love.graphics.draw(gui.flag.image, gui.flag.x, gui.flag.y, 0, scaleX, scaleY)
-            newButton(gui.flag_button.x, gui.flag_button.y, drawWidth, drawHeight, gui.flag_button.color, gui.flag_button.isHovered, gui.flag_button.text)
+
         end
 
     end
     drawCountryFlag()
-
-    gui.flag_button.isHovered = ishovered(gui.flag_button.x, gui.flag_button.y, drawWidth, drawHeight, mousex, mousey)
-
-    if isHovered then
-        gui.flag_buttton.text = "hovered!"
-    end
-
-    if gui.flag_button.isHovered and love.mouse.isDown then
-        currenttab = "political"
-        gui.flag_button.text = "political"
-    end
 end
 
 
@@ -102,6 +113,9 @@ function gui.draw()
     end
 
     drawCountryFlag()
+    newButton(gui.button_political.x, gui.button_political.y, gui.button_political.width, gui.button_political.height, gui.button_political.color, gui.button_political.isHovered, gui.button_political.text)
+    newButton(gui.button_economy.x, gui.button_economy.y, gui.button_economy.width, gui.button_economy.height, gui.button_economy.color, gui.button_economy.isHovered, gui.button_economy.text)
+    newButton(gui.button_research.x, gui.button_research.y, gui.button_research.width, gui.button_research.height, gui.button_research.color, gui.button_research.isHovered, gui.button_research.text)
 
     love.graphics.setColor(0, 0, 0, 1)
     love.graphics.setFont(gui.smallFont)
