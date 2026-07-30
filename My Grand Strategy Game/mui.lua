@@ -63,6 +63,6 @@ function mui.draw()
     newButton(qtw.x, qtw.y, qtw.width, qtw.height, qtw.color, qtwHovered, "Quit Game")
 
     love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.setFont(Bigfont)
+    love.graphics.setFont(bigfont)
     love.graphics.printf("Iron and Blackpowder", sidebar.x, sidebar.height / 4, sidebar.width, "justify")
 end
