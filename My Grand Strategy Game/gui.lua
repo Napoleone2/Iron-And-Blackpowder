@@ -112,6 +112,7 @@ function gui.draw()
         drawPoliticalTab()
     end
 
+    love.graphics.setFont(mediumfont)
     drawCountryFlag()
     newButton(gui.button_political.x, gui.button_political.y, gui.button_political.width, gui.button_political.height, gui.button_political.color, gui.button_political.isHovered, gui.button_political.text)
     newButton(gui.button_economy.x, gui.button_economy.y, gui.button_economy.width, gui.button_economy.height, gui.button_economy.color, gui.button_economy.isHovered, gui.button_economy.text)
