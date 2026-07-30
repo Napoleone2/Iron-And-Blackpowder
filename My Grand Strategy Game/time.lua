@@ -25,7 +25,7 @@ function timemgr()
     month = math.floor(days / 30)
     year = math.floor(month / 12) + 684          -- Start at Year 684
     month_of_year = math.floor(month % 12) + 1
-    day_of_month = math.floor(days % 30) + 1    -- Day 1 to Day 28
+    day_of_month = math.floor(days % 30) + 1    -- Day 1 to Day 30
     
     function add_suffix()
         suffix = "th"
@@ -50,5 +50,11 @@ function love.keypressed(key)
 
     if key == "space" then
         time_paused = not time_paused 
+    end
+
+    if key == "escape" then
+        gamestate = "menu"
+        time_paused = true
+        time = 0
     end
 end
