@@ -5,6 +5,7 @@ local countries = require("Countries")
 require("ui_tools")
 require("political_tab")
 require("hovered")
+require("fonts")
 
 
 ww = love.graphics.getWidth()
@@ -32,7 +33,6 @@ function gui.load()
     gui.flag.path = nil
     gui.flagScale = 1
 
-    gui.smallFont = love.graphics.newFont("Data/Reblade-Regular.otf", 35)
 
     gui.button_political = {}
     gui.button_political.x = ww / 8
@@ -118,6 +118,6 @@ function gui.draw()
     newButton(gui.button_research.x, gui.button_research.y, gui.button_research.width, gui.button_research.height, gui.button_research.color, gui.button_research.isHovered, gui.button_research.text)
 
     love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.setFont(gui.smallFont)
+    love.graphics.setFont(bigfont)
     love.graphics.printf(date, 0, 0, topbar.width, "right")
 end

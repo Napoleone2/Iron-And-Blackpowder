@@ -1,8 +1,8 @@
+require("fonts")
+
 cities = {}
 
 cities.list = require("city_data") 
-
-font = love.graphics.newFont("Data/Reblade-Regular.otf", 18)
 
 function cities.load()
     
@@ -22,7 +22,7 @@ function cities.update(dt)
 end
 
 function cities.draw() 
-    love.graphics.setFont(font)
+    love.graphics.setFont(smallfont)
     
     for _, city in ipairs(cities.list) do
         if city.x and city.y then

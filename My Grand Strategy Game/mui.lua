@@ -1,4 +1,5 @@
 require("ui_tools")
+require("fonts")
 
 mui = {}
 ww = love.graphics.getWidth()
@@ -7,7 +8,6 @@ wh = love.graphics.getHeight()
 mousex, mousey = love.mouse.getPosition()
 
 function mui.load()
-    Bigfont = love.graphics.newFont("Data/Reblade-Regular.otf", 40)
 
     wp1 = love.graphics.newImage("Data/Images/wp1.jpg")
     wp1w = wp1:getWidth()

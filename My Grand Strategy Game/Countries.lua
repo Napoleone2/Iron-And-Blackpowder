@@ -5,7 +5,7 @@ local countries = {
         bellumonym = "Brogdi",
         flag = "Data/Images/Flags/Glopistan.png",
         leader = "PLACEHOLDER",
-        lore = "Glopistan is a small country located in the heart of Europe. It is known for its rich history, beautiful landscapes, and vibrant culture. The people of Glopistan are proud of their heritage and are known for their hospitality and friendliness.",
+        lore = "Glopistan is a small country located on the coast of iberia. It is known for its rich history, beautiful landscapes, and vibrant culture. The people of Glopistan are proud of their heritage and are known for their hospitality and friendliness.",
         color = {0.1, 0.65, 0.25}
     },
     {

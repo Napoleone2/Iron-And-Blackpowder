@@ -1,4 +1,5 @@
 require("ui_tools")
+require("fonts")
 local countries = require("Countries")
 
 local country_buttons = {}
@@ -13,7 +14,6 @@ local panel = {
     height = wh - wh / 19
 }
 
-local itemFont = love.graphics.newFont("Data/Reblade-Regular.otf", 18)
 local itemHeight = 90
 local itemSpacing = 12
 local itemMargin = 20
@@ -85,7 +85,7 @@ function country_buttons.draw()
         love.graphics.setColor(1, 1, 1, 1)
         love.graphics.draw(item.flag, item.x + 36, item.y + (item.height - item.flag:getHeight() * flagScale) / 2, 0, flagScale, flagScale)
 
-        love.graphics.setFont(itemFont)
+        love.graphics.setFont(smallfont)
         love.graphics.setColor(0, 0, 0, 1)
         love.graphics.printf(item.country.name, item.x + 120, item.y + 18, item.width - 130, "left")
         love.graphics.setColor(0, 0, 0, 1)

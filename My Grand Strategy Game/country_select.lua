@@ -1,14 +1,11 @@
 require("ui_tools")
+require("fonts")
 local country_buttons = require("country_buttons")
 
 local country_select = {}
 
 local ww = love.graphics.getWidth()
 local wh = love.graphics.getHeight()
-
-local bigfont = love.graphics.newFont("Data/Reblade-Regular.otf", 40)
-local medfont = love.graphics.newFont("Data/Reblade-Regular.otf", 24)
-local smallfont = love.graphics.newFont("Data/Reblade-Regular.otf", 14)
 
 local topbar
 local cs_body
