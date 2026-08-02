@@ -1,4 +1,7 @@
 -- main.lua
+
+-- TODO: Make a document explaining the economy system
+
 require("map_scrolling")
 require("cities")
 require("gui")
@@ -9,7 +12,7 @@ local Provinces = require("provinces")
 local country_select = require("country_select")
 
 function love.load()
-    gamestate = "menu" 
+    gamestate = "initialloading" 
     loadtime()
     
     mui.load()

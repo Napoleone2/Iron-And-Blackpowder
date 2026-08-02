@@ -65,4 +65,3 @@ local countries = {
 }
 
 return countries
-

@@ -1,3 +1,5 @@
+-- TODO?: Eventually add more cities
+
 local city_data = {
     { name = "Madrid",    pctX = 0.45, pctY = 0.45,  population = 3480000, owner = "none",       controller = "none",       ownerColor = {0.22, 0.22, 0.22} }, 
     { name = "Lisbon",    pctX = 0.11, pctY = 0.60,  population = 575740,  owner = "olisbon",    controller = "olisbon",    ownerColor = {0.0, 0.35, 0.33} }, 

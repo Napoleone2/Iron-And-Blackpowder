@@ -48,6 +48,10 @@ end
 
 function country_buttons.load()
     createItems()
+    for i, countrie in ipairs(countries) do
+        print(countries[i].name)
+        print(countries[i].leader)
+    end
 end
 
 function country_buttons.update(mousex, mousey, mouseDown)
