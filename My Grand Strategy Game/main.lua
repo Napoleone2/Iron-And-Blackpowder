@@ -1,6 +1,7 @@
 -- main.lua
 
 -- TODO: Make a document explaining the economy system
+-- TODO: Make a release and share it on the discord
 
 require("map_scrolling")
 require("cities")
@@ -8,6 +9,7 @@ require("gui")
 require("mui")
 require("loadingscreen")
 require("time")
+require("music")
 local Provinces = require("provinces")
 local country_select = require("country_select")
 
@@ -20,6 +22,7 @@ function love.load()
     gui.load()
     map.load()
     load()
+    music.load()
 end
 
 function love.update(dt)
@@ -41,6 +44,7 @@ function love.update(dt)
         country_select.update(dt)
     end
 
+    music.play()
 end
 
 function love.draw()
