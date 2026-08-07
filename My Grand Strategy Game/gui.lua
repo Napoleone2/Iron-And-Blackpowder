@@ -10,8 +10,6 @@ require("fonts")
 ww = love.graphics.getWidth()
 wh = love.graphics.getHeight()
 
-mousex, mousey = love.mouse.getPosition()
-
 gui = {}
 
 -- Initialize the top bar and UI flag state.
@@ -98,6 +96,7 @@ function gui.update()
 
     end
     drawCountryFlag()
+    mousex, mousey = love.mouse.getPosition()
 end
 
 
