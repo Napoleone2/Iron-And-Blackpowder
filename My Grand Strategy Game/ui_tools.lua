@@ -1,6 +1,8 @@
 function newButton(x, y, width, height, color, isHovered, text)
+    mousex, mousey = love.mouse.getPosition()
+
     local displayColor = {color[1], color[2], color[3], color[4] or 1}
-    if isHovered then
+    if mousex > x and mousey > y and mousex < x + width and mousey < y + height then
         displayColor[1] = displayColor[1] * 0.7
         displayColor[2] = displayColor[2] * 0.7
         displayColor[3] = displayColor[3] * 0.7

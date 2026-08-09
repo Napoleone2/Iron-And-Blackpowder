@@ -38,7 +38,6 @@ function gui.load()
     gui.button_political.height = 25
     gui.button_political.color = {0.2, 0.2, 0.8, 1}
     gui.button_political.text = "Political"
-    gui.button_political.isHovered = false
 
     gui.button_economy = {}
     gui.button_economy.x = gui.button_political.x + gui.button_political.width
@@ -47,7 +46,6 @@ function gui.load()
     gui.button_economy.height = 25
     gui.button_economy.color = {0.2, 0.8, 0.2, 1}
     gui.button_economy.text = "Economy"
-    gui.button_economy.isHovered = false
 
     gui.button_research = {}
     gui.button_research.x = gui.button_economy.x + gui.button_economy.width
@@ -56,8 +54,6 @@ function gui.load()
     gui.button_research.height = 25
     gui.button_research.color = {0.8, 0.2, 0.2, 1}
     gui.button_research.text = "Research"
-    gui.button_research.isHovered = false
-
 
 end
 
