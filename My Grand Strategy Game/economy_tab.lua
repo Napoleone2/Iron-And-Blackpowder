@@ -1,4 +1,5 @@
 require("ui_tools")
+require("fonts")
 
 -- TODO: Start working on this again some day
 economyTab = {}
@@ -27,5 +28,6 @@ function drawEconomicTab()
     end
 
     newFrame(economyTab.x, economyTab.y, economyTab.width, economyTab.height, {255/255, 228/255, 181/255, 1}, "Economy")
+    love.graphics.setFont(bigfont)
     newButton(economyTab.close_button.x, economyTab.close_button.y, economyTab.close_button.width, economyTab.close_button.height, {193/255, 154/255, 107/255}, false, "X")
 end

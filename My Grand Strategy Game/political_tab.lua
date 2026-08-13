@@ -1,4 +1,5 @@
 require("ui_tools")
+require("fonts")
 
 -- TODO: Start working on this again some day
 politicalTab = {}
@@ -29,5 +30,6 @@ function drawPoliticalTab()
     end
 
     newFrame(politicalTab.x, politicalTab.y, politicalTab.width, politicalTab.height, {255/255, 228/255, 181/255, 1}, "Politics")
+    love.graphics.setFont(bigfont)
     newButton(politicalTab.close_button.x, politicalTab.close_button.y, politicalTab.close_button.width, politicalTab.close_button.height, {193/255, 154/255, 107/255}, false, "X")
 end

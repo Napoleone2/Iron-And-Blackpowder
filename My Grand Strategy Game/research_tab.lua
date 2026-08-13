@@ -1,4 +1,5 @@
 require("ui_tools")
+require("fonts")
 
 -- TODO: Start working on this again some day
 researchTab = {}
@@ -27,5 +28,6 @@ function drawResearchTab()
     end
 
     newFrame(researchTab.x, researchTab.y, researchTab.width, researchTab.height, {255/255, 228/255, 181/255, 1}, "Research")
+    love.graphics.setFont(bigfont)
     newButton(researchTab.close_button.x, researchTab.close_button.y, researchTab.close_button.width, researchTab.close_button.height, {193/255, 154/255, 107/255}, false, "X")
 end

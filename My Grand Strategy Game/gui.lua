@@ -139,8 +139,6 @@ function gui.draw()
     love.graphics.setFont(mediumfont)
     drawCountryFlag()
 
-    -- TODO: make these actually work [50%]
-
     newButton(gui.button_political.x, gui.button_political.y, gui.button_political.width, gui.button_political.height, gui.button_political.color, gui.button_political.isHovered, gui.button_political.text)
     newButton(gui.button_economy.x, gui.button_economy.y, gui.button_economy.width, gui.button_economy.height, gui.button_economy.color, gui.button_economy.isHovered, gui.button_economy.text)
     newButton(gui.button_research.x, gui.button_research.y, gui.button_research.width, gui.button_research.height, gui.button_research.color, gui.button_research.isHovered, gui.button_research.text)

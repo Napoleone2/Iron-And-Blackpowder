@@ -33,14 +33,14 @@ function cities.draw()
             love.graphics.printf(city.name, renderX + 25, renderY, 1000, "left")
 
             love.graphics.setColor(0, 0, 0, 1)
-            love.graphics.circle("fill", renderX, renderY, 14)
+            love.graphics.circle("fill", renderX, renderY, 7)
             
             if city.ownerColor then
                 love.graphics.setColor(city.ownerColor[1], city.ownerColor[2], city.ownerColor[3], 1)
             else
                 love.graphics.setColor(1, 1, 1, 1)
             end
-            love.graphics.circle("fill", renderX, renderY, 10)
+            love.graphics.circle("fill", renderX, renderY, 5)
         end
     end
     love.graphics.setColor(1, 1, 1, 1) -- Always reset canvas coloring
