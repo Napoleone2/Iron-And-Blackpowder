@@ -14,6 +14,25 @@ wh = love.graphics.getHeight()
 
 gui = {}
 
+-- track previous left mouse state for click debounce
+local prevLeftDown = false
+
+local function drawCountryFlag()
+    if gui.flag.image and selectedCountry then
+        local targetHeight = 96
+        local scaleX = targetHeight / math.max(1, gui.flag.image:getHeight())
+        local scaleY = targetHeight / math.max(1, gui.flag.image:getHeight())
+        local drawWidth = gui.flag.image:getWidth() * scaleX
+        local drawHeight = gui.flag.image:getHeight() * scaleY
+
+        love.graphics.setColor(255/255, 228/255, 181/255)
+        love.graphics.setLineWidth((ww or love.graphics.getWidth()) / 80)
+        love.graphics.rectangle("line", gui.flag.x, gui.flag.y, drawWidth, drawHeight)
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.draw(gui.flag.image, gui.flag.x, gui.flag.y, 0, scaleX, scaleY)
+    end
+end
+
 -- Initialize the top bar and UI flag state.
 function gui.load()
     currenttab = "none"
@@ -76,44 +95,39 @@ function gui.update()
         gui.flag.image = nil
     end
 
-    function drawCountryFlag()
-        if gui.flag.image and selectedCountry then
-            targetHeight = 96
-            scaleX = targetHeight / math.max(1, gui.flag.image:getHeight())
-            scaleY = targetHeight / math.max(1, gui.flag.image:getHeight())
-            drawWidth = gui.flag.image:getWidth() * scaleX
-            drawHeight = gui.flag.image:getHeight() * scaleY
+    local mousex, mousey = love.mouse.getPosition()
 
-            love.graphics.setColor(255/255, 228/255, 181/255)
-            love.graphics.setLineWidth(ww / 80)
-            love.graphics.rectangle("line", gui.flag.x, gui.flag.y, drawWidth, drawHeight)
-            love.graphics.setColor(1, 1, 1, 1)
-            love.graphics.draw(gui.flag.image, gui.flag.x, gui.flag.y, 0, scaleX, scaleY)
+    -- hover detection for buttons
+    gui.button_political.isHovered = mousex > gui.button_political.x and mousex < gui.button_political.x + gui.button_political.width and mousey > gui.button_political.y and mousey < gui.button_political.y + gui.button_political.height
+    gui.button_economy.isHovered = mousex > gui.button_economy.x and mousex < gui.button_economy.x + gui.button_economy.width and mousey > gui.button_economy.y and mousey < gui.button_economy.y + gui.button_economy.height
+    gui.button_research.isHovered = mousex > gui.button_research.x and mousex < gui.button_research.x + gui.button_research.width and mousey > gui.button_research.y and mousey < gui.button_research.y + gui.button_research.height
 
-        end
+    -- debounce clicks: trigger only on transition from up->down
+    local leftDown = love.mouse.isDown(1)
+    local leftClicked = leftDown and not prevLeftDown
 
-    end
-    drawCountryFlag()
-
-    mousex, mousey = love.mouse.getPosition()
-
-    if mousex > gui.button_political.x and mousex < gui.button_political.x + gui.button_political.width and mousey > gui.button_political.y and mousey < gui.button_political.y + gui.button_political.height then
-        if love.mouse.isDown(1) then
+    if leftClicked and gui.button_political.isHovered then
+        if politicalTab.closed == true then
             currenttab = "political"
+            politicalTab.closed = false
         end
     end
 
-    if mousex > gui.button_economy.x and mousex < gui.button_economy.x + gui.button_economy.width and mousey > gui.button_economy.y and mousey < gui.button_economy.y + gui.button_economy.height then
-        if love.mouse.isDown(1) then
+    if leftClicked and gui.button_economy.isHovered then
+        if economyTab.closed == true then
             currenttab = "economic"
+            economyTab.closed = false
         end
     end
 
-    if mousex > gui.button_research.x and mousex < gui.button_research.x + gui.button_research.width and mousey > gui.button_research.y and mousey < gui.button_research.y + gui.button_research.height then
-        if love.mouse.isDown(1) then
+    if leftClicked and gui.button_research.isHovered then
+        if researchTab.closed == true then
             currenttab = "research"
+            researchTab.closed = false
         end
     end
+
+    prevLeftDown = leftDown
 end
 
 

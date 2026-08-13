@@ -4,7 +4,7 @@ require("fonts")
 mui = {}
 ww = love.graphics.getWidth()
 wh = love.graphics.getHeight()
-local version = "Version 0.0.2"
+local version = "Version 0.0.2 (DEV)"
 
 mousex, mousey = love.mouse.getPosition()
 
