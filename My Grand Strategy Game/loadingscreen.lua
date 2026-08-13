@@ -15,7 +15,7 @@ function load()
 end
 
 function loadupdate(speed)
-    loadingbar.width = loadingbar.width + speed * 1
+    loadingbar.width = loadingbar.width + speed * 100
     if loadingbar.width > ww and gamestate == "initialloading" then
         print("loading complete!")
         gamestate = "menu"

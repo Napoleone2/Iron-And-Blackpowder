@@ -1,15 +1,15 @@
--- TODO: work on this
+require("ui_tools")
 
-local graphics = love.graphics
-local ww = graphics.getWidth()
-local wh = graphics.getHeight()
+-- TODO: work on this
+local ww = love.graphics.getWidth()
+local wh = love.graphics.getHeight()
 
 economicTab = {}
 economicTab.x = 0
-economicTab.y = wh / 20
-economicTab.width = ww / 4
-economicTab.height = wh
+economicTab.y = 0
+economicTab.width = windwchunk * 5
+economicTab.height = windhchunk * 20
 
 function drawEconomicTab()
-    graphics.rectangle("fill", economicTab.x, economicTab.y, economicTab.width, economicTab.height)
+    newFrame(economicTab.x, economicTab.y, economicTab.width, economicTab.height, {255/255, 228/255, 181/255, 1}, "Economy")
 end

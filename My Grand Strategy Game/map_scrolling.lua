@@ -2,6 +2,7 @@ local Provinces = require("provinces")
 
 map = {}
 
+
 function map.load()
     zoom = 2
     scroll_speed = 10

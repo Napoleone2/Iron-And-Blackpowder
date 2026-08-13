@@ -1,3 +1,9 @@
+ww = love.graphics.getWidth()
+wh = love.graphics.getHeight()
+
+windwchunk = ww / 20
+windhchunk = wh / 20
+
 function newButton(x, y, width, height, color, isHovered, text)
     mousex, mousey = love.mouse.getPosition()
 
@@ -15,9 +21,14 @@ function newButton(x, y, width, height, color, isHovered, text)
     love.graphics.setColor(1, 1, 1, 1)
 end
 
-function newFrame(x, y, width, height, color)
+function newFrame(x, y, width, height, color, name)
     love.graphics.setColor(color[1], color[2], color[3], color[4] or 1)
     love.graphics.rectangle("fill", x, y, width, height)
-    love.graphics.setColor(color[1] - 0.2, color[2] - 0.2, color[3] - 0.2, color[4] - 0.2 or 1 - 0.2)
-    love.graphics.rectangle("fill", x + width * 0.05, y + height * 0.05, width - width * 0.1, height - height + 0.1)
+    love.graphics.setColor(0, 0, 0, 1)
+    if name then
+        love.graphics.print(name, x, y)
+    else
+        love.graphics.print("Untitled", x, y)
+    end
 end
+

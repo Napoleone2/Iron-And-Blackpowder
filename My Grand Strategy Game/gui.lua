@@ -4,6 +4,8 @@ require("country_buttons")
 local countries = require("Countries")
 require("ui_tools")
 require("political_tab")
+require("economy_tab")
+require("research_tab")
 require("hovered")
 require("fonts")
 
@@ -92,7 +94,26 @@ function gui.update()
 
     end
     drawCountryFlag()
+
     mousex, mousey = love.mouse.getPosition()
+
+    if mousex > gui.button_political.x and mousex < gui.button_political.x + gui.button_political.width and mousey > gui.button_political.y and mousey < gui.button_political.y + gui.button_political.height then
+        if love.mouse.isDown(1) then
+            currenttab = "political"
+        end
+    end
+
+    if mousex > gui.button_economy.x and mousex < gui.button_economy.x + gui.button_economy.width and mousey > gui.button_economy.y and mousey < gui.button_economy.y + gui.button_economy.height then
+        if love.mouse.isDown(1) then
+            currenttab = "economic"
+        end
+    end
+
+    if mousex > gui.button_research.x and mousex < gui.button_research.x + gui.button_research.width and mousey > gui.button_research.y and mousey < gui.button_research.y + gui.button_research.height then
+        if love.mouse.isDown(1) then
+            currenttab = "research"
+        end
+    end
 end
 
 
@@ -101,18 +122,22 @@ function gui.draw()
     love.graphics.setColor(255/255, 228/255, 181/255)
     love.graphics.rectangle("fill", topbar.x, topbar.y, topbar.width, topbar.height)
 
-    if currenttab == "political" then
-        drawPoliticalTab()
-    end
-
     love.graphics.setFont(mediumfont)
     drawCountryFlag()
 
-    -- TODO: make these actually work
+    -- TODO: make these actually work [50%]
 
     newButton(gui.button_political.x, gui.button_political.y, gui.button_political.width, gui.button_political.height, gui.button_political.color, gui.button_political.isHovered, gui.button_political.text)
     newButton(gui.button_economy.x, gui.button_economy.y, gui.button_economy.width, gui.button_economy.height, gui.button_economy.color, gui.button_economy.isHovered, gui.button_economy.text)
     newButton(gui.button_research.x, gui.button_research.y, gui.button_research.width, gui.button_research.height, gui.button_research.color, gui.button_research.isHovered, gui.button_research.text)
+
+    if currenttab == "political" then
+        drawPoliticalTab()
+    elseif currenttab == "economic" then
+        drawEconomicTab()
+    elseif currenttab == "research" then
+        drawResearchTab()
+    end
 
     love.graphics.setColor(0, 0, 0, 1)
     love.graphics.setFont(bigfont)
