@@ -2,6 +2,7 @@ require("ui_tools")
 require("fonts")
 
 -- TODO: Start working on this again some day
+-- trash code [0xBADCODE]
 economyTab = {}
 economyTab.x = 0
 economyTab.y = 0

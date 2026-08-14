@@ -9,7 +9,7 @@ ressources = {
     coal = {money_cost = 1}, -- cheapest ressource, but very important so you'll use a lot
     steel = {money_cost = 15},
     rifles = {money_cost = 5},
-    ammunition = {money_cost = 2} --used by all gunpowder units, so you'll need a lot of it, especially for ships since they have many cannons
+    ammunition = {money_cost = 2} -- used by all gunpowder units, so you'll need a lot of it, especially for ships since they have many cannons
 }
 
 buildings = {

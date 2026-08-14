@@ -1,6 +1,6 @@
 -- main.lua
 
--- TODO: Make a document explaining the economy system [25%]
+-- TODO: Make a document explaining the economy system [33%]
 -- TODO: Make a release and share it on the discord [0.0.2]
 
 require("map_scrolling")

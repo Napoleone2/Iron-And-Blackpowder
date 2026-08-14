@@ -20,11 +20,9 @@ function drawPoliticalTab()
 
     local mousex, mousey = love.mouse.getPosition()
 
-    -- keep close button positioned relative to the tab
     politicalTab.close_button.x = politicalTab.x + politicalTab.width - politicalTab.close_button.width
     politicalTab.close_button.y = politicalTab.y
 
-    -- close on left-click while cursor is over the button
     if love.mouse.isDown(1) and mousex > politicalTab.close_button.x and mousey > politicalTab.close_button.y and mousex < politicalTab.close_button.x + politicalTab.close_button.width and mousey < politicalTab.close_button.y + politicalTab.close_button.height then
         politicalTab.closed = true
     end
