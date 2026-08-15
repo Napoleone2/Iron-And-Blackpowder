@@ -1,6 +1,6 @@
 local countries = {
     {
-        name = "Glopistan",
+        name = "The Glopistan Theocracy",
         demonym = "Glopistani",
         bellumonym = "Brogdi",
         flag = "Data/Images/Flags/Glopistan.png",
