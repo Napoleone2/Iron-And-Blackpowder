@@ -1,4 +1,11 @@
 # Iron and Blackpowder
 ## Napoleonic era iberian penninsula focused grand strategy game
-### XVIIIth century to XXth century technologies!
-Will make you touch grass!
+
+### Lead 7 fictional nations and thrive!
+- The Jomwan of Macklostan
+- The Adherbal Empire
+- The Glopistan Theocracy
+- The Kingdom of Lleida
+- Olisbon
+- The Kingdom of Algarvorum
+- Montagrand
