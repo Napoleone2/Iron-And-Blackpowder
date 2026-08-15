@@ -1,7 +1,6 @@
 # Iron and Blackpowder
-## Napoleonic era iberian penninsula focused grand strategy game
 
-### Lead 7 fictional nations and thrive!
+### Lead 7 fictional nations through a 19th century inspired period and thrive!
 - The Jomwan of Macklostan
 - The Adherbal Empire
 - The Glopistan Theocracy
@@ -9,3 +8,10 @@
 - Olisbon
 - The Kingdom of Algarvorum
 - Montagrand
+- 42 different cities across the Iberian Peninsula, North-Western Africa and Southern France!
+---
+### It is your choice in Rule
+- Become a warlord!
+- Create a rich merchant empire!
+- Perform diplomatic actions!
+- And much more!
