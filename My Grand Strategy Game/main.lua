@@ -1,7 +1,7 @@
 -- main.lua
 
 -- TODO: Make a document explaining the economy system [33%]
--- TODO: Make a release and share it on the discord [0.0.2]
+-- TODO: Make a release and share it on the discord [0.0.3]
 
 require("map_scrolling")
 require("cities")
@@ -12,6 +12,19 @@ require("time")
 require("music")
 local Provinces = require("provinces")
 local country_select = require("country_select")
+local selection = require("selection")
+
+function love.mousepressed(x, y, button)
+    if gamestate == "game" then
+        selection.mousepressed(x, y, button)
+    end
+end
+
+function love.mousereleased(x, y, button)
+    if gamestate == "game" then
+        selection.mousereleased(x, y, button, cities.list, map, zoom)
+    end
+end
 
 function love.load()
     gamestate = "initialloading" 

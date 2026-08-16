@@ -4,8 +4,9 @@ cities = {}
 
 cities.list = require("city_data") 
 
+local mousex, mousey = love.mouse.getPosition()
+
 function cities.load()
-    
     local mapImg = love.graphics.newImage("Data/Images/spain_map.png")
     local mapW = mapImg:getWidth()
     local mapH = mapImg:getHeight()
@@ -26,15 +27,28 @@ function cities.draw()
     
     for _, city in ipairs(cities.list) do
         if city.x and city.y then
-            
             local renderX = map.x + (city.x * zoom)
             local renderY = map.y + (city.y * zoom)
-            love.graphics.setColor(1, 1, 1, 1)
-            love.graphics.printf(city.name, renderX + 25, renderY, 1000, "left")
 
-            love.graphics.setColor(0, 0, 0, 1)
+            -- Selection highlight glow and ring
+            if city.selected then
+                love.graphics.setColor(1, 1, 1, 0.35)
+                love.graphics.circle("fill", renderX, renderY, 13)
+                love.graphics.setColor(1, 1, 1, 1)
+                love.graphics.setLineWidth(2)
+                love.graphics.circle("line", renderX, renderY, 13)
+                love.graphics.setLineWidth(1)
+            end
+
+            -- Outer Circle
+            if city.selected then 
+                love.graphics.setColor(1, 1, 1, 1)
+            else
+                love.graphics.setColor(0, 0, 0, 1)
+            end
             love.graphics.circle("fill", renderX, renderY, 7)
             
+            -- Inner Owner Circle
             if city.ownerColor then
                 love.graphics.setColor(city.ownerColor[1], city.ownerColor[2], city.ownerColor[3], 1)
             else
@@ -43,5 +57,5 @@ function cities.draw()
             love.graphics.circle("fill", renderX, renderY, 5)
         end
     end
-    love.graphics.setColor(1, 1, 1, 1) -- Always reset canvas coloring
+    love.graphics.setColor(1, 1, 1, 1)
 end

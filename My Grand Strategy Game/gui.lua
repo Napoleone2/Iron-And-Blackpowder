@@ -8,6 +8,7 @@ require("economy_tab")
 require("research_tab")
 require("hovered")
 require("fonts")
+local selection = require("selection")
 
 ww = love.graphics.getWidth()
 wh = love.graphics.getHeight()
@@ -51,7 +52,6 @@ function gui.load()
     gui.flag.path = nil
     gui.flagScale = 1
 
-
     gui.button_political = {}
     gui.button_political.x = ww / 8
     gui.button_political.y = topbar.height
@@ -75,10 +75,7 @@ function gui.load()
     gui.button_research.height = 25
     gui.button_research.color = {0.8, 0.2, 0.2, 1}
     gui.button_research.text = "Research"
-
 end
-
-
 
 function gui.update()
     -- Reload the flag image whenever the selected country changes.
@@ -130,8 +127,8 @@ function gui.update()
     prevLeftDown = leftDown
 end
 
-
 function gui.draw()
+    selection.draw()
 
     love.graphics.setColor(255/255, 228/255, 181/255)
     love.graphics.rectangle("fill", topbar.x, topbar.y, topbar.width, topbar.height)
@@ -149,6 +146,11 @@ function gui.draw()
         drawEconomicTab()
     elseif currenttab == "research" then
         drawResearchTab()
+    end
+
+    -- Pass cities.list into the inspect draw function
+    if cities and cities.list then
+        selection.inspect.draw(cities.list)
     end
 
     love.graphics.setColor(0, 0, 0, 1)
