@@ -1,13 +1,14 @@
 require("time")
-require("country_select")
+local country_Select = require("country_select")
 require("country_buttons")
-local countries = require("Countries")
+local countries = require("countries") -- Fixed case-sensitivity matching countries.lua[cite: 7, 10]
 require("ui_tools")
 require("political_tab")
 require("economy_tab")
 require("research_tab")
 require("hovered")
 require("fonts")
+local city_data = { list = require("city_data") }
 local selection = require("selection")
 
 ww = love.graphics.getWidth()
@@ -15,7 +16,6 @@ wh = love.graphics.getHeight()
 
 gui = {}
 
--- track previous left mouse state for click debounce
 local prevLeftDown = false
 
 local function drawCountryFlag()
@@ -34,7 +34,25 @@ local function drawCountryFlag()
     end
 end
 
--- Initialize the top bar and UI flag state.
+function gui.processDailyIncome()
+    local cityList = (cities and cities.list) or city_data.list
+
+    -- 1. Update daily tax income per city with a balanced multiplier[cite: 10]
+    for _, city in ipairs(cityList) do
+        local tax_income_modifier = 0.00001 -- Reduced from 0.0001 to prevent hyper-inflation[cite: 10]
+        city.tax_income = math.floor((city.population or 0) * tax_income_modifier)
+    end
+
+    -- 2. Add tax income to country treasuries once per daily tick[cite: 10]
+    for _, country in ipairs(countries) do
+        for _, city in ipairs(cityList) do
+            if city.controller == country.id then
+                country.treasury = (country.treasury or 0) + city.tax_income
+            end
+        end
+    end
+end
+
 function gui.load()
     currenttab = "none"
 
@@ -78,15 +96,10 @@ function gui.load()
 end
 
 function gui.update()
-    -- Reload the flag image whenever the selected country changes.
     if selectedCountry and selectedCountry.flag and selectedCountry.flag ~= gui.flag.path then
         gui.flag.path = selectedCountry.flag
         local ok, image = pcall(love.graphics.newImage, selectedCountry.flag)
-        if ok and image then
-            gui.flag.image = image
-        else
-            gui.flag.image = nil
-        end
+        gui.flag.image = (ok and image) or nil
     elseif not selectedCountry and gui.flag.path then
         gui.flag.path = nil
         gui.flag.image = nil
@@ -94,31 +107,21 @@ function gui.update()
 
     local mousex, mousey = love.mouse.getPosition()
 
-    -- hover detection for buttons
     gui.button_political.isHovered = mousex > gui.button_political.x and mousex < gui.button_political.x + gui.button_political.width and mousey > gui.button_political.y and mousey < gui.button_political.y + gui.button_political.height
     gui.button_economy.isHovered = mousex > gui.button_economy.x and mousex < gui.button_economy.x + gui.button_economy.width and mousey > gui.button_economy.y and mousey < gui.button_economy.y + gui.button_economy.height
     gui.button_research.isHovered = mousex > gui.button_research.x and mousex < gui.button_research.x + gui.button_research.width and mousey > gui.button_research.y and mousey < gui.button_research.y + gui.button_research.height
 
-    -- debounce clicks: trigger only on transition from up->down
     local leftDown = love.mouse.isDown(1)
     local leftClicked = leftDown and not prevLeftDown
 
-    if leftClicked and gui.button_political.isHovered then
-        if politicalTab.closed == true then
+    if leftClicked then
+        if gui.button_political.isHovered and politicalTab.closed then
             currenttab = "political"
             politicalTab.closed = false
-        end
-    end
-
-    if leftClicked and gui.button_economy.isHovered then
-        if economyTab.closed == true then
+        elseif gui.button_economy.isHovered and economyTab.closed then
             currenttab = "economic"
             economyTab.closed = false
-        end
-    end
-
-    if leftClicked and gui.button_research.isHovered then
-        if researchTab.closed == true then
+        elseif gui.button_research.isHovered and researchTab.closed then
             currenttab = "research"
             researchTab.closed = false
         end
@@ -140,17 +143,68 @@ function gui.draw()
     newButton(gui.button_economy.x, gui.button_economy.y, gui.button_economy.width, gui.button_economy.height, gui.button_economy.color, gui.button_economy.isHovered, gui.button_economy.text)
     newButton(gui.button_research.x, gui.button_research.y, gui.button_research.width, gui.button_research.height, gui.button_research.color, gui.button_research.isHovered, gui.button_research.text)
 
+    if selectedCountry then
+    love.graphics.setColor(0, 0, 0, 1)
+    love.graphics.setFont(bigfont)
+
+    -- 1. Find the live country record from the countries table
+    local currentCountry = nil
+    for _, country in ipairs(countries) do
+        if country.id == selectedCountry.id then
+            currentCountry = country
+            break
+        end
+    end
+
+    -- Fallback to selectedCountry if not found
+    currentCountry = currentCountry or selectedCountry
+
+    -- 2. Calculate population from controlled cities
+    local cityList = (cities and cities.list) or city_data.list
+    local totalPopulation = 0
+    if cityList and currentCountry.id then
+        for _, city in ipairs(cityList) do
+            if city.controller == currentCountry.id then
+                totalPopulation = totalPopulation + (city.population or 0)
+            end
+        end
+    end
+
+    -- 3. Display live treasury value (unfrozen)
+    local treasuryX = gui.button_political.x
+    local treasuryY = 0
+    local liveTreasury = math.floor(currentCountry.treasury or 0)
+    if liveTreasury < 1000000 then 
+        treasuryText = "Treasury: $" .. math.floor(liveTreasury / 1000) .. "K"
+    else
+        treasuryText = "Treasury: $" .. math.floor(liveTreasury / 1000000) .. "M"
+    end
+    -- 4. Format population display
+    local popText = ""
+    if totalPopulation >= 1000000 then
+        popText = string.format(" | Pop: %.1fM", totalPopulation / 1000000)
+    elseif totalPopulation >= 1000 then
+        popText = string.format(" | Pop: %dK", math.floor(totalPopulation / 1000))
+    else
+        popText = " | Pop: " .. totalPopulation
+    end
+
+    love.graphics.print(treasuryText .. popText, treasuryX, treasuryY)
+end
+
     if currenttab == "political" then
         drawPoliticalTab()
     elseif currenttab == "economic" then
-        drawEconomicTab()
+        -- Passed city_data.list array directly so ipairs doesn't fail
+        local globalStats = getGlobalStats(city_data.list, countries, selectedCountry)
+        drawEconomicTab(globalStats)
     elseif currenttab == "research" then
         drawResearchTab()
     end
 
-    -- Pass cities.list into the inspect draw function
-    if cities and cities.list then
-        selection.inspect.draw(cities.list)
+    local cityList = (cities and cities.list) or city_data.list
+    if cityList then
+        selection.inspect.draw(cityList)
     end
 
     love.graphics.setColor(0, 0, 0, 1)

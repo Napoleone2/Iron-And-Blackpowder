@@ -4,7 +4,7 @@ require("fonts")
 mui = {}
 ww = love.graphics.getWidth()
 wh = love.graphics.getHeight()
-local version = "Version 0.0.2 (DEV)"
+local version = "Version 0.0.3 (DEV)"
 
 mousex, mousey = love.mouse.getPosition()
 
@@ -79,4 +79,5 @@ function mui.draw()
     love.graphics.printf("Iron and Blackpowder", sidebar.x, sidebar.height / 4, sidebar.width, "justify")
     love.graphics.setFont(bigfont)
     love.graphics.printf(version, version_frame.x, version_frame.y + version_frame.height, version_frame.width, "center")
+
 end

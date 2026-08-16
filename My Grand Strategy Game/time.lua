@@ -1,3 +1,5 @@
+local last_day = 1
+
 function loadtime()
     months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"}
     special_day_suffix = { "st", "nd", "rd" }
@@ -5,9 +7,9 @@ function loadtime()
     time_speed = 1
     time_paused = true
     paused = "Paused"
-    
     time_scale = 1
-
+    
+    last_day = 1
 end
 
 function timemgr()
@@ -18,7 +20,7 @@ function timemgr()
     end
 
     if gamestate == "game" and not time_paused then
-        time = time + (time_speed * time_scale )
+        time = time + (time_speed * time_scale)
     end
 
     days = math.floor(time / 100)
@@ -27,6 +29,14 @@ function timemgr()
     month_of_year = math.floor(month % 12) + 1
     day_of_month = math.floor(days % 30) + 1    -- Day 1 to Day 30
     
+    -- Trigger daily income when a new day passes
+    if days > last_day then
+        last_day = days
+        if gui and gui.processDailyIncome then
+            gui.processDailyIncome()
+        end
+    end
+
     function add_suffix()
         suffix = "th"
         if day_of_month ~= 11 and day_of_month ~= 12 and day_of_month ~= 13 and day_of_month % 10 >= 1 and day_of_month % 10 <= 3 then
@@ -36,25 +46,25 @@ function timemgr()
     add_suffix()
 
     date = day_of_month .. suffix .. " of " .. months[month_of_year] .. " " .. year .. " | " .. paused
-
 end
 
 function love.keypressed(key)
     if key == "1" then
         time_speed = 1
     elseif key == "2" then
-        time_speed = 5
+        time_speed = 3
     elseif key == "3" then
-        time_speed = 10
-    end
-
-    if key == "space" then
-        time_paused = not time_paused 
-    end
-
-    if key == "escape" then
+        time_speed = 5
+    elseif key == "space" then
+        time_paused = not time_paused
+    elseif key == "e" then
+        if economyTab then
+            economyTab.closed = not economyTab.closed
+        end
+    elseif key == "escape" then
         gamestate = "menu"
         time_paused = true
         time = 0
+        last_day = 1
     end
 end

@@ -63,14 +63,12 @@ end
 function love.draw()
     if gamestate == "initialloading" then
         drawload()
-    end
-    if gamestate == "maingameloading" then
+    elseif gamestate == "maingameloading" then
         drawload()
-    end
-    if gamestate == "game" then
+    elseif gamestate == "game" then
         map.draw()
         cities.draw()
-        gui.draw()
+        gui.draw() -- Handles drawEconomicTab when economyTab is open
     elseif gamestate == "menu" then
         mui.draw()
     elseif gamestate == "country_select" then

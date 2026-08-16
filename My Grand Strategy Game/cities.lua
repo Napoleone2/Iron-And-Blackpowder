@@ -1,4 +1,5 @@
 require("fonts")
+local city_data = require("city_data")
 
 cities = {}
 
@@ -59,3 +60,8 @@ function cities.draw()
     end
     love.graphics.setColor(1, 1, 1, 1)
 end
+
+return {
+    list = city_data
+}
+

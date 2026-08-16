@@ -1,6 +1,8 @@
 local countries = {
     {
+        id = "glopistan",
         name = "The Glopistan Theocracy",
+        treasury = 1000,
         demonym = "Glopistani",
         bellumonym = "Brogdi",
         flag = "Data/Images/Flags/Glopistan.png",
@@ -9,7 +11,9 @@ local countries = {
         color = {0.1, 0.65, 0.25}
     },
     {
+        id = "olisbon",
         name = "Olisbon",
+        treasury = 1000,
         demonym = "Olisbonese",
         bellumonym = "Olisboa",
         flag = "Data/Images/Flags/Olisbon.png",
@@ -18,7 +22,9 @@ local countries = {
         color = {0.0, 0.35, 0.33}
     },
     {
+        id = "algarvorum",
         name = "Kingdom of Algarvorum",
+        treasury = 1000,
         demonym = "Algarvii",
         bellumonym = "Algarvean",
         flag = "Data/Images/Flags/Algarvorum.png",
@@ -27,7 +33,9 @@ local countries = {
         color = {0.0, 0.55, 1.0}
     },
     {
+        id = "adherbal",
         name = "Adherbal Empire",
+        treasury = 1000,
         demonym = "Adherbalien",
         bellumonym = "Adherbal",
         flag = "Data/Images/placeholder.png",
@@ -36,7 +44,9 @@ local countries = {
         color = {0.75, 0.3, 0.15}
     },
     {
+        id = "macklostan",
         name = "Jomwan of Macklostan",
+        treasury = 1000,
         demonym = "Hamespanana",
         bellumonym = "Macklo",
         flag = "Data/Images/Flags/Macklostan.jpg",
@@ -45,7 +55,9 @@ local countries = {
         color = {0.95, 0.85, 0.2}
     },
     {
+        id = "montagrand",
         name = "Montagrand",
+        treasury = 1000,
         demonym = "Montagrandian",
         bellumonym = "Montagrand",
         flag = "Data/Images/placeholder.png",
@@ -54,7 +66,9 @@ local countries = {
         color = {0.55, 0.2, 0.6}
     },
     {
+        id = "lleida",
         name = "Kingdom of Lleida",
+        treasury = 1000,
         demonym = "Lleidese",
         bellumonym = "Lleidese",
         flag = "Data/Images/Flags/Lleida.png",
