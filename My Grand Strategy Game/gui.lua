@@ -1,7 +1,7 @@
 require("time")
 local country_Select = require("country_select")
 require("country_buttons")
-local countries = require("countries") -- Fixed case-sensitivity matching countries.lua[cite: 7, 10]
+local countries = require("countries")
 require("ui_tools")
 require("political_tab")
 require("economy_tab")
@@ -37,19 +37,21 @@ end
 function gui.processDailyIncome()
     local cityList = (cities and cities.list) or city_data.list
 
-    -- 1. Update daily tax income per city with a balanced multiplier[cite: 10]
-    for _, city in ipairs(cityList) do
-        local tax_income_modifier = 0.00001 -- Reduced from 0.0001 to prevent hyper-inflation[cite: 10]
-        city.tax_income = math.floor((city.population or 0) * tax_income_modifier)
-    end
-
-    -- 2. Add tax income to country treasuries once per daily tick[cite: 10]
     for _, country in ipairs(countries) do
+        local countryDailyIncome = 0
+
         for _, city in ipairs(cityList) do
             if city.controller == country.id then
-                country.treasury = (country.treasury or 0) + city.tax_income
+                local tax_income_modifier = 0.00001
+                local tier = city.tier or 1 
+
+                local rawIncome = (city.population or 0) * tax_income_modifier * tier
+                city.tax_income = math.floor(rawIncome)
+                countryDailyIncome = math.floor(countryDailyIncome + rawIncome)
             end
         end
+
+        country.treasury = (country.treasury or 0) + countryDailyIncome
     end
 end
 
@@ -147,7 +149,6 @@ function gui.draw()
     love.graphics.setColor(0, 0, 0, 1)
     love.graphics.setFont(bigfont)
 
-    -- 1. Find the live country record from the countries table
     local currentCountry = nil
     for _, country in ipairs(countries) do
         if country.id == selectedCountry.id then
@@ -156,10 +157,8 @@ function gui.draw()
         end
     end
 
-    -- Fallback to selectedCountry if not found
     currentCountry = currentCountry or selectedCountry
 
-    -- 2. Calculate population from controlled cities
     local cityList = (cities and cities.list) or city_data.list
     local totalPopulation = 0
     if cityList and currentCountry.id then
@@ -170,7 +169,6 @@ function gui.draw()
         end
     end
 
-    -- 3. Display live treasury value (unfrozen)
     local treasuryX = gui.button_political.x
     local treasuryY = 0
     local liveTreasury = math.floor(currentCountry.treasury or 0)
@@ -179,7 +177,7 @@ function gui.draw()
     else
         treasuryText = "Treasury: $" .. math.floor(liveTreasury / 1000000) .. "M"
     end
-    -- 4. Format population display
+
     local popText = ""
     if totalPopulation >= 1000000 then
         popText = string.format(" | Pop: %.1fM", totalPopulation / 1000000)
@@ -195,7 +193,6 @@ end
     if currenttab == "political" then
         drawPoliticalTab()
     elseif currenttab == "economic" then
-        -- Passed city_data.list array directly so ipairs doesn't fail
         local globalStats = getGlobalStats(city_data.list, countries, selectedCountry)
         drawEconomicTab(globalStats)
     elseif currenttab == "research" then

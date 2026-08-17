@@ -1,8 +1,6 @@
--- provinces.lua
 local Provinces = {}
 Provinces.canvas = nil
 
--- Keep these accessible in memory for real-time mouse lookups
 Provinces.maskData = nil
 Provinces.seaR, Provinces.seaG, Provinces.seaB = 0, 0, 0
 Provinces.tolerance = 0.05
@@ -16,7 +14,6 @@ end
 function Provinces.generate(mapWidth, mapHeight, citiesList)
     local provinceData = love.image.newImageData(mapWidth, mapHeight)
     
-    -- Store map data on the module so our hover function can access it later
     Provinces.maskData = love.image.newImageData("Data/Images/spain_map.png")
     Provinces.seaR, Provinces.seaG, Provinces.seaB = Provinces.maskData:getPixel(0, 0)
     
@@ -55,28 +52,23 @@ function Provinces.generate(mapWidth, mapHeight, citiesList)
     Provinces.canvas = love.graphics.newImage(provinceData)
 end
 
--- NEW: Instantly finds which city province coordinates belong to
 function Provinces.getCityAt(worldX, worldY, citiesList)
-    -- 1. SAFETY NET: If citiesList is missing or invalid, fail gracefully instead of crashing
     if not citiesList or type(citiesList) ~= "table" then 
         return nil 
     end
 
-    -- 2. Safety check: Ensure mouse is within the map boundaries
     if not Provinces.maskData then return nil end
     if worldX < 0 or worldX >= Provinces.maskData:getWidth() or 
        worldY < 0 or worldY >= Provinces.maskData:getHeight() then
         return nil
     end
 
-    -- 3. Land/Sea Check: If the mouse is over the ocean, return nothing
     local r, g, b = Provinces.maskData:getPixel(worldX, worldY)
     local isSea = math.abs(r - Provinces.seaR) < Provinces.tolerance and 
                   math.abs(g - Provinces.seaG) < Provinces.tolerance and 
                   math.abs(b - Provinces.seaB) < Provinces.tolerance
     if isSea then return nil end
 
-    -- 4. Voronoi Matching: Find the closest city to this exact coordinate
     local closestCity = nil
     local minDistSq = math.huge
 

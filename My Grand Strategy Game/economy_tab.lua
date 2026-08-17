@@ -4,7 +4,7 @@ local city_data = require("city_data")
 local countries = require("countries")
 
 function getGlobalStats(citiesList, countriesList, playerSelection)
-    -- Extract the string ID if a country table was passed
+
     local factionId = type(playerSelection) == "table" and playerSelection.id or playerSelection
     local targetId = factionId and string.lower(tostring(factionId)) or nil
 
@@ -15,27 +15,25 @@ function getGlobalStats(citiesList, countriesList, playerSelection)
         treasury = 0
     }
 
-    -- 1. Calculate City Stats
     if citiesList then
         for _, city in ipairs(citiesList) do
             local owner = city.owner and string.lower(tostring(city.owner))
             local controller = city.controller and string.lower(tostring(city.controller))
 
-            -- Match if no faction specified, or if owner/controller matches player faction ID
             if not targetId or owner == targetId or controller == targetId then
+                local tier = city.tier or 1
                 stats.total_cities = stats.total_cities + 1
                 stats.total_population = stats.total_population + (city.population or 0)
                 
                 local income = (city.tax_income and city.tax_income > 0) 
                     and city.tax_income 
-                    or math.floor((city.population or 0) * 0.00001)
+                    or math.floor(((city.population or 0) * tier) * 0.00001)
                 
                 stats.total_tax_income = stats.total_tax_income + income
             end
         end
     end
 
-    -- 2. Calculate Treasury
     if countriesList then
         for _, country in ipairs(countriesList) do
             local cId = country.id and string.lower(tostring(country.id))
@@ -80,7 +78,6 @@ function drawEconomicTab(globalStats)
     love.graphics.setFont(bigfont)
     newButton(economyTab.close_button.x, economyTab.close_button.y, economyTab.close_button.width, economyTab.close_button.height, colors.darkest, false, "X")
 
-    -- Global Stats Section
     local stats = globalStats or {}
     local padding = 15
     local lineSpacing = 28
@@ -105,8 +102,7 @@ function drawEconomicTab(globalStats)
     love.graphics.printf("Total Tax Income: " .. (stats.total_tax_income or 0), economyTab.x + padding, startY, economyTab.width - padding * 2, "left")
     startY = startY + lineSpacing
 
-    love.graphics.printf("Treasury: " .. (stats.treasury or 0), economyTab.x + padding, startY, economyTab.width - padding * 2, "left")
+    love.graphics.printf("Treasury: " .. math.floor(stats.treasury or 0), economyTab.x + padding, startY, economyTab.width - padding * 2, "left")
 
     love.graphics.setColor(1, 1, 1, 1)
 end
-

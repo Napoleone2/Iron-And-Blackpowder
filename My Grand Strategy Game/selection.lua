@@ -9,7 +9,6 @@ selection.inspect.y = windhchunk * 10
 selection.inspect.width = windwchunk * 5
 selection.inspect.height = windhchunk * 10
 
--- Helper function for converting city world coordinates to screen rendering coordinates
 local function getCityRenderPos(city, map, zoom)
     local z = zoom or 1
     local renderX = (map and map.x or 0) + (city.x * z)
@@ -19,6 +18,19 @@ end
 
 function selection.mousepressed(x, y, button)
     if button == 1 then
+        if selection.inspect.buttons then
+            for menuKey, btn in pairs(selection.inspect.buttons) do
+                if x >= btn.x and x <= btn.x + btn.w and y >= btn.y and y <= btn.y + btn.h then
+                    if selection.inspect.activeMenu == menuKey then
+                        selection.inspect.activeMenu = nil
+                    else
+                        selection.inspect.activeMenu = menuKey
+                    end
+                    return 
+                end
+            end
+        end
+
         iposx, iposy = x, y
     end
 end
@@ -31,7 +43,7 @@ function selection.mousereleased(x, y, button, citiesList, map, zoom)
     local isClick = dragDistance < 5
 
     if isClick then
-        -- Single-click detection using hit radius
+        
         local hitRadius = 15
         local clickedCity = nil
 
@@ -54,7 +66,6 @@ function selection.mousereleased(x, y, button, citiesList, map, zoom)
             end
         end
     else
-        -- Drag box selection
         local x1, x2 = math.min(iposx, x), math.max(iposx, x)
         local y1, y2 = math.min(iposy, y), math.max(iposy, y)
 
@@ -75,6 +86,35 @@ function selection.mousereleased(x, y, button, citiesList, map, zoom)
     iposx, iposy = nil, nil
 end
 
+local function drawRessourcesMenu(citiesList, x, y, width, height)
+    local totals = { iron = 0, wood = 0, stone = 0, coal = 0, rifles = 0, steel = 0, ammunition = 0, blackpowder = 0}
+    for _, city in ipairs(citiesList) do
+        if city.selected and city.resource_output then
+            for res, val in pairs(totals) do
+                totals[res] = val + (city.resource_output[res] or 0)
+            end
+        end
+    end
+
+    local lineY = y + 40
+    love.graphics.setLineWidth(2)
+    love.graphics.setColor(colors.lightest)
+    love.graphics.rectangle("fill", x + width, y, width, height)
+    love.graphics.setColor(colors.darkest)
+    love.graphics.rectangle("line", x + width, y, width, height)
+
+    love.graphics.setColor(colors.dark)
+    love.graphics.rectangle("fill", x + width + 10, y + 10, width - 20, height - 20)
+
+    love.graphics.setColor(0, 0, 0, 1)
+    love.graphics.printf("Resource Output", x + width, y + 10, width, "center")
+
+    for resName, amount in pairs(totals) do
+        love.graphics.printf(resName:upper() .. ": " .. amount, x + width + 20, lineY, width - 20, "left")
+        lineY = lineY + 22
+    end
+end
+
 function selection.draw()
     if gamestate ~= "game" or not love.mouse.isDown(1) or not iposx or not iposy then
         return
@@ -92,7 +132,6 @@ function selection.draw()
     love.graphics.setLineWidth(2)
     love.graphics.rectangle("line", x1, y1, width, height)
 
-    -- Reset graphic state
     love.graphics.setLineWidth(1)
     love.graphics.setColor(1, 1, 1, 1)
 end
@@ -107,13 +146,13 @@ function selection.inspect.draw(citiesList)
 
     for _, city in ipairs(citiesList) do
         if city.selected then
+            local tier = city.tier or 1
             selected_cities = selected_cities + 1
             total_population = total_population + (city.population or 0)
             
-            -- Calculate individual city tax fallback if tax_income is 0
             local income = (city.tax_income and city.tax_income > 0) 
                 and city.tax_income 
-                or math.floor((city.population or 0) * 0.001)
+                or math.floor(((city.population or 0) * tier) * 0.00001)
                 
             total_tax_income = total_tax_income + income
             singleCity = city
@@ -124,25 +163,21 @@ function selection.inspect.draw(citiesList)
 
     local padding = 10
     local lineSpacing = 28
-    local lineCount = (selected_cities == 1) and 5 or 3
+    local lineCount = (selected_cities == 1) and 6 or 3 
     local panelHeight = windhchunk * 10
-    local statsHeight = lineCount * lineSpacing + padding
+    local statsHeight = lineCount * lineSpacing + padding * 2
     local textWidth = selection.inspect.width - (padding * 2)
 
-    -- Panel Background
     love.graphics.setColor(255/255, 228/255, 181/255)
     love.graphics.rectangle("fill", selection.inspect.x, selection.inspect.y, selection.inspect.width, panelHeight)
 
-    -- Stats Background
     love.graphics.setColor(205/255, 178/255, 131/255)
     love.graphics.rectangle("fill", selection.inspect.x + padding, selection.inspect.y + padding, textWidth, statsHeight)
 
-    -- Panel Border
     love.graphics.setColor(135/255, 108/255, 61/255)
     love.graphics.setLineWidth(2)
     love.graphics.rectangle("line", selection.inspect.x, selection.inspect.y, selection.inspect.width, panelHeight)
 
-    -- Text Display
     love.graphics.setColor(0, 0, 0, 1)
     love.graphics.setFont(mediumfont)
 
@@ -151,9 +186,10 @@ function selection.inspect.draw(citiesList)
     if selected_cities == 1 and singleCity then
         local ownerText = singleCity.owner or "Unclaimed"
         local controllerText = singleCity.controller or "Unclaimed"
+        local singleTier = singleCity.tier or 1
         local taxIncome = (singleCity.tax_income and singleCity.tax_income > 0) 
             and singleCity.tax_income 
-            or math.floor((singleCity.population or 0) * 0.001)
+            or math.floor(((singleCity.population or 0) * singleTier) * 0.00001)
 
         love.graphics.printf(singleCity.name or "City", selection.inspect.x, currentY, selection.inspect.width, "center")
         currentY = currentY + lineSpacing
@@ -168,6 +204,10 @@ function selection.inspect.draw(citiesList)
         currentY = currentY + lineSpacing
 
         love.graphics.printf("Tax Income: " .. taxIncome, selection.inspect.x + padding * 2, currentY, textWidth - padding, "left")
+        currentY = currentY + lineSpacing
+
+        love.graphics.printf("City Tier: " .. singleTier, selection.inspect.x + padding * 2, currentY, textWidth - padding, "left")
+        currentY = currentY + lineSpacing
     else
         love.graphics.printf(selected_cities .. " Cities", selection.inspect.x, currentY, selection.inspect.width, "center")
         currentY = currentY + lineSpacing
@@ -178,16 +218,30 @@ function selection.inspect.draw(citiesList)
         love.graphics.printf("Total Tax: " .. total_tax_income, selection.inspect.x + padding * 2, currentY, textWidth - padding, "left")
     end
 
-    -- UI Action Buttons
     local buttonColor = {135/255, 108/255, 61/255}
     local buttonY = selection.inspect.y + statsHeight + padding * 2
     local buttonH = windhchunk * 0.7
 
-    newButton(selection.inspect.x + padding, buttonY, textWidth, buttonH, buttonColor, true, "Buildings")
-    newButton(selection.inspect.x + padding, buttonY + windhchunk, textWidth, buttonH, buttonColor, true, "Units")
-    newButton(selection.inspect.x + padding, buttonY + windhchunk * 2, textWidth, buttonH, buttonColor, true, "Ressources")
+    selection.inspect.buttons = {
+        buildings  = { x = selection.inspect.x + padding, y = buttonY, w = textWidth, h = buttonH, text = "Buildings" },
+        units      = { x = selection.inspect.x + padding, y = buttonY + windhchunk * 0.9, w = textWidth, h = buttonH, text = "Units" },
+        ressources = { x = selection.inspect.x + padding, y = buttonY + windhchunk * 1.8, w = textWidth, h = buttonH, text = "Ressources" }
+    }
 
-    -- Reset graphic state
+    newButton(selection.inspect.buttons.buildings.x, selection.inspect.buttons.buildings.y, textWidth, buttonH, buttonColor, true, selection.inspect.buttons.buildings.text)
+    newButton(selection.inspect.buttons.units.x, selection.inspect.buttons.units.y, textWidth, buttonH, buttonColor, true, selection.inspect.buttons.units.text)
+    newButton(selection.inspect.buttons.ressources.x, selection.inspect.buttons.ressources.y, textWidth, buttonH, buttonColor, true, selection.inspect.buttons.ressources.text)
+
+    if selection.inspect.activeMenu == "ressources" then
+        drawRessourcesMenu(
+            citiesList, 
+            selection.inspect.x, 
+            selection.inspect.y, 
+            selection.inspect.width, 
+            panelHeight
+        )
+    end
+
     love.graphics.setLineWidth(1)
     love.graphics.setColor(1, 1, 1, 1)
 end

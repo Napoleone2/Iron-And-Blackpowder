@@ -29,7 +29,6 @@ function timemgr()
     month_of_year = math.floor(month % 12) + 1
     day_of_month = math.floor(days % 30) + 1    -- Day 1 to Day 30
     
-    -- Trigger daily income when a new day passes
     if days > last_day then
         last_day = days
         if gui and gui.processDailyIncome then

@@ -1,5 +1,3 @@
--- main.lua
-
 -- TODO: Make a document explaining the economy system [33%]
 -- TODO: Make a release and share it on the discord [0.0.3]
 
@@ -68,7 +66,7 @@ function love.draw()
     elseif gamestate == "game" then
         map.draw()
         cities.draw()
-        gui.draw() -- Handles drawEconomicTab when economyTab is open
+        gui.draw() 
     elseif gamestate == "menu" then
         mui.draw()
     elseif gamestate == "country_select" then

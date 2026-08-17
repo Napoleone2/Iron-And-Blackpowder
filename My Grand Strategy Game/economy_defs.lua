@@ -67,5 +67,3 @@ units = {
         steel_cost = 0
     }
 }
-
--- i wonder if i should make it more like victoria 2, where you have to build factories and then they produce ressources, and then you can use those ressources to build units. that would make it more complex but also more interesting. maybe i can add that in a future update. for now, this is a good start.

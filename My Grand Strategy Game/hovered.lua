@@ -1,4 +1,4 @@
--- TODO: Eventually make this work
+-- TODO: uhhh
 
 function ishovered(x, y, width, height, mousex, mousey)
     isHovered = 0

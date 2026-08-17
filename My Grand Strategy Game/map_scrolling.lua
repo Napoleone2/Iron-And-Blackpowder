@@ -82,5 +82,5 @@ function map.draw()
     love.graphics.setColor(1, 1, 1, 0) 
     love.graphics.draw(map.image, map.x, map.y, 0, zoom, zoom)
     
-    love.graphics.setColor(1, 1, 1, 1) -- Reset default
+    love.graphics.setColor(1, 1, 1, 1)
 end

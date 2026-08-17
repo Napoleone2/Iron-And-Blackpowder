@@ -31,7 +31,6 @@ function cities.draw()
             local renderX = map.x + (city.x * zoom)
             local renderY = map.y + (city.y * zoom)
 
-            -- Selection highlight glow and ring
             if city.selected then
                 love.graphics.setColor(1, 1, 1, 0.35)
                 love.graphics.circle("fill", renderX, renderY, 13)
@@ -41,15 +40,14 @@ function cities.draw()
                 love.graphics.setLineWidth(1)
             end
 
-            -- Outer Circle
             if city.selected then 
                 love.graphics.setColor(1, 1, 1, 1)
             else
                 love.graphics.setColor(0, 0, 0, 1)
             end
+
             love.graphics.circle("fill", renderX, renderY, 7)
             
-            -- Inner Owner Circle
             if city.ownerColor then
                 love.graphics.setColor(city.ownerColor[1], city.ownerColor[2], city.ownerColor[3], 1)
             else
