@@ -15,3 +15,4 @@
 - Create a rich merchant empire!
 - Perform diplomatic actions!
 - And much more!
+[Game's discord](https://discord.gg/HFvhp2V6n)
