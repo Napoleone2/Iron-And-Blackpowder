@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Abdel\\Documents\\GitHub\\Iron-And-Blackpowder\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Abdel\\Documents\\GitHub\\Iron-And-Blackpowder\\My Grand Strategy Game\\selection.lua||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:My Grand Strategy Game\\selection.lua||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "selection.lua",
+              "DocumentMoniker": "C:\\Users\\Abdel\\Documents\\GitHub\\Iron-And-Blackpowder\\My Grand Strategy Game\\selection.lua",
+              "RelativeDocumentMoniker": "My Grand Strategy Game\\selection.lua",
+              "ToolTip": "C:\\Users\\Abdel\\Documents\\GitHub\\Iron-And-Blackpowder\\My Grand Strategy Game\\selection.lua",
+              "RelativeToolTip": "My Grand Strategy Game\\selection.lua",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAVAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAALVSURBVDhPjZFNa5xlFIbvc57ned/5SDI1mTSTD5sWhEIQceGf6EoUd/4Bd/4MN\u002B22rgR3BkQQF5JVrVAXgaFQTSARhdHUVgcmmbyZmffjec45LtLuXHj9gOu\u002BuW96\u002BPBzpypSXF7duXN75x4733gYgZgcwYwIpKp3H3329e8f3i9Goz883vsg\u002BdU1fHIbRvf3v28RrKJFcW/SGXxZG0cD2MyIACMAIDKXqhfrWjx4I13uSzmj9sef2uP97\u002BDHCyHA0ImWnZ5XN\u002BEcVjKHdvBoe0ZggmMCZStbJTpfeVnqxu3BF9XwZ5rMKuNAas4UZGarAbrd5tjPIMtOJFhU0qgqjUpTxkUUfVHhQTE9f\u002Bvl3y9th66YHh8O2wDKi/H4/e27b38L54UJDCbAgLKMIAN85oyZJKUYTp89/ai/MfhG2Qe/2euCAOgss3ff7CO0cptdVjad1uj1Mn5\u002BVWhMxu/sbQEAmUTjyc20tTUAEYzrJqJqEuom0byqcPrrP/TjT3/S6W8TOi8q45xoZ3fFRMRUDWWTqI4JVUwomwRumgiRBMCwWFT463kBx4D3QJ57ml1FarW8AaBrACIyJgITEYsIzATMQFVFOAcsL3u0Wg7j8QwxqqUkxEwAzAjXx5oZzAxMBKSkqOuIPGcsLXnM5zWqKmI6LXHjRqAsY6QkAIzMDAAMr2ARgYhA1UxEMBi0rd/PjUis13O2ublkImopJRNReyWg/xAIvU7Z2enS3t4q3bq1QmW5IADknCPnHIUQcC0TpJTgRcSICKqqKSXx3ouqGjOj08npyZMfsL6\u002Bbmtrazg7O1NmxsbGhvV6PVRVZayqdN1AvYg4Vc1U1auqN1NnZu74\u002BNgfHh76o6Oj7OTkxDGzd84hhEC\u002BLEup6xrz\u002BfxiMpn80mq1GgBMRBZCoMFggG63ayEE2t3d1SzLstFodFEUBfI8NxwcHAAAUkqvd/nfDIdD/AvdsrkxieciEQAAAABJRU5ErkJggg==",
+              "WhenOpened": "2026-08-19T21:14:13.362Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

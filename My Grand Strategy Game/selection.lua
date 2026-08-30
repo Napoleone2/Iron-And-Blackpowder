@@ -1,4 +1,6 @@
 require("ui_tools")
+local country_buttons = require("country_buttons")
+local economy_defs = require("economy_defs")
 
 local selection = {}
 local iposx, iposy
@@ -9,6 +11,39 @@ selection.inspect.y = windhchunk * 10
 selection.inspect.width = windwchunk * 5
 selection.inspect.height = windhchunk * 10
 
+local function getPlayerFaction()
+    return selectedCountry and selectedCountry.id
+end
+
+local MAX_BUILDINGS = 6
+
+local buildingNames = {
+    steel_factory      = "Steel Factory",
+    recruitment_center = "Recruitment Center",
+    rifle_factory      = "Rifle Factory"
+}
+
+local index, PLAYER_FACTION = country_buttons.getSelectedCountry()
+
+local function buildBuilding(city, buildingType)
+    if not city or not city.buildings then return false end
+
+    -- Check if player owns the city
+    local playerFaction = getPlayerFaction()
+    if not playerFaction or city.owner ~= playerFaction then
+        return false -- Cannot build in unowned cities
+    end
+
+    -- Check if the city is at max capacity
+    if #city.buildings >= MAX_BUILDINGS then
+        return false 
+    end
+
+    local name = buildingNames[buildingType] or buildingType
+    table.insert(city.buildings, name)
+    return true
+end
+
 local function getCityRenderPos(city, map, zoom)
     local z = zoom or 1
     local renderX = (map and map.x or 0) + (city.x * z)
@@ -18,6 +53,7 @@ end
 
 function selection.mousepressed(x, y, button)
     if button == 1 then
+        -- 1. Check main tab buttons (Buildings, Units, Ressources)
         if selection.inspect.buttons then
             for menuKey, btn in pairs(selection.inspect.buttons) do
                 if x >= btn.x and x <= btn.x + btn.w and y >= btn.y and y <= btn.y + btn.h then
@@ -27,6 +63,16 @@ function selection.mousepressed(x, y, button)
                         selection.inspect.activeMenu = menuKey
                     end
                     return 
+                end
+            end
+        end
+
+        -- 2. Check construction buttons inside Buildings Menu
+        if selection.inspect.activeMenu == "buildings" and selection.inspect.buildButtons then
+            for _, btn in ipairs(selection.inspect.buildButtons) do
+                if x >= btn.x and x <= btn.x + btn.w and y >= btn.y and y <= btn.y + btn.h then
+                    buildBuilding(btn.city, btn.buildingType)
+                    return
                 end
             end
         end
@@ -43,7 +89,6 @@ function selection.mousereleased(x, y, button, citiesList, map, zoom)
     local isClick = dragDistance < 5
 
     if isClick then
-        
         local hitRadius = 15
         local clickedCity = nil
 
@@ -112,6 +157,100 @@ local function drawRessourcesMenu(citiesList, x, y, width, height)
     for resName, amount in pairs(totals) do
         love.graphics.printf(resName:upper() .. ": " .. amount, x + width + 20, lineY, width - 20, "left")
         lineY = lineY + 22
+    end
+end
+
+local function drawBuildingsMenu(citiesList, x, y, width, height, padding)
+    -- Find first selected city
+    local selectedCity = nil
+    for _, city in ipairs(citiesList) do
+        if city.selected then
+            selectedCity = city
+            break
+        end
+    end
+
+    if not selectedCity then return end
+
+    -- Draw Main Panel Container
+    love.graphics.setColor(colors.lightest)
+    love.graphics.rectangle("fill", x, y, width, height)
+    
+    -- Left Section Background (City Slots)
+    love.graphics.setColor(colors.light)
+    love.graphics.rectangle("fill", x + padding, y + padding, width / 2 - (padding * 1.5), height - (padding * 2))
+    
+    -- Right Section Background (Construction List)
+    love.graphics.setColor(colors.dark)
+    love.graphics.rectangle("fill", x + width / 2 + padding / 2, y + padding, width / 2 - (padding * 1.5), height - (padding * 2))
+    
+    love.graphics.setColor(colors.darkest)
+    love.graphics.rectangle("line", x, y, width, height)
+
+    -- 1. Render City Building Slots (Left Side)
+    local leftX = x + padding * 2
+    local leftWidth = width / 2 - padding * 3.5
+    local slotHeight = windhchunk * 1.25
+
+    for i = 1, MAX_BUILDINGS do
+        local drawY = y + padding * 2 + (i - 1) * (slotHeight + padding)
+        local buildingName = (selectedCity.buildings and selectedCity.buildings[i]) or "Empty Slot"
+
+        -- Card background based on occupancy
+        if selectedCity.buildings and selectedCity.buildings[i] then
+            love.graphics.setColor(colors.dark)
+        else
+            love.graphics.setColor(colors.lightest)
+        end
+        love.graphics.rectangle("fill", leftX, drawY, leftWidth, slotHeight)
+
+        -- Text label
+        love.graphics.setColor(0, 0, 0, 1)
+        local fontHeight = love.graphics.getFont():getHeight()
+        local textY = drawY + (slotHeight - fontHeight) / 2
+        love.graphics.printf(buildingName, leftX + padding, textY, leftWidth - padding * 2, "center")
+    end
+
+-- 2. Render Available Buildings for Construction (Right Side)
+    selection.inspect.buildButtons = {}
+
+    local rightX = x + width / 2 + padding * 1.5
+    local rightWidth = width / 2 - padding * 3.5
+    local playerFaction = getPlayerFaction()
+
+    -- If player doesn't own the city, show a warning instead of build buttons
+    if not playerFaction or selectedCity.owner ~= playerFaction then
+        love.graphics.setColor(1, 0.3, 0.3, 1) -- Red tint
+        love.graphics.printf("Cannot build:\nCity is not owned!", rightX, y + padding * 4, rightWidth, "center")
+    elseif economy_defs and economy_defs.buildings then
+        local currentY = y + padding * 2
+        local btnH = windhchunk / 1.25
+
+        for _, building in pairs(economy_defs.buildings) do
+            local name = building.name or "Unknown"
+            local bType = building.id or name:lower():gsub(" ", "_")
+
+            newButton(
+                rightX, 
+                currentY, 
+                rightWidth, 
+                btnH, 
+                colors.darkest, 
+                false, 
+                name
+            )
+
+            table.insert(selection.inspect.buildButtons, {
+                x = rightX,
+                y = currentY,
+                w = rightWidth,
+                h = btnH,
+                buildingType = bType,
+                city = selectedCity
+            })
+
+            currentY = currentY + btnH + padding
+        end
     end
 end
 
@@ -239,6 +378,17 @@ function selection.inspect.draw(citiesList)
             selection.inspect.y, 
             selection.inspect.width, 
             panelHeight
+        )
+    end
+
+    if selection.inspect.activeMenu == "buildings" then
+        drawBuildingsMenu(
+            citiesList,
+            selection.inspect.x + selection.inspect.width,
+            selection.inspect.y,
+            windwchunk * 10,
+            panelHeight,
+            10
         )
     end
 
