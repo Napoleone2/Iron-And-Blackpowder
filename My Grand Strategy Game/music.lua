@@ -6,5 +6,5 @@ function music.load()
 end
 
 function music.play()
-    love.audio.play(countryside)
+    love.audio.play(startup_music)
 end

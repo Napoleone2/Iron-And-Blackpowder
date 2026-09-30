@@ -1,1 +1,3 @@
 --this file manages the saving and loading of savefiles in the game :D
+-- GOY
+-- TODO: DISAPPEAR
